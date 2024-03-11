@@ -1,14 +1,14 @@
 const database = require('../database/conn');
 
-class Funcionario {
+class Product {
 
-    criarFuncionario(req, res) {
-        const {nome, sobrenome, cargo, data_contrato} = req.body
+    createProduct(req, res) {
+        const {name, category, brand, stock, price} = req.body
 
-        console.log(nome,sobrenome,cargo, data_contrato);
+        console.log(name, category, brand, stock, price);
 
-        const sql = 'INSERT INTO funcionarios (??,??,??,??) VALUES (?,?,?,?)'
-        const data = ['nome', 'sobrenome', 'cargo', 'data_contrato', nome, sobrenome, cargo, data_contrato]
+        const sql = 'INSERT INTO product (??,??,??,??,??) VALUES (?,?,?,?,?)'
+        const data = ['name', 'category', 'brand', 'stock', 'price', name, category, brand, stock, price]
 
         database.query(sql, data, (error) => {
             if(error) {
@@ -16,28 +16,28 @@ class Funcionario {
                 return
             };
 
-            res.json({message: "Funcionário(a) cadastrado(a) com sucesso"});
+            res.json({message: "Produto criado(a) com sucesso"});
         })
     }
 
-    listarFunciorarios(req, res) {
-        const sql = 'SELECT * FROM funcionarios';
+    listProducts(req, res) {
+        const sql = 'SELECT * FROM product';
         database.query(sql, (error, data) => {
             if(error) {
                 res.json(error)
                 return
             };
 
-            const funcionarios = data;
+            const products = data;
 
-            res.json(funcionarios);
+            res.json(products);
         })
     }
 
-    buscarFuncionario(req, res) {
+    searchProduct(req, res) {
         const id = req.params.id;
 
-        const sql = 'SELECT * FROM funcionarios WHERE ?? = ?';
+        const sql = 'SELECT * FROM product WHERE ?? = ?';
         const data = ['id', id];
 
         database.query(sql, data, (error, data) => {
@@ -46,17 +46,17 @@ class Funcionario {
                 return
             }
 
-            const funcionario = data;
+            const product = data;
 
-            res.json(funcionario);
+            res.json(product);
         })
     }
 
-    atualizarFuncionario(req, res) {
-        const {id, nome, sobrenome, cargo, data_contrato} = req.body;
+    updateProduct(req, res) {
+        const {id, name, category, brand, stock, price} = req.body;
 
-        const sql = 'UPDATE funcionarios SET ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?';
-        const data = ['nome', nome, 'sobrenome', sobrenome, 'cargo', cargo, 'data_contrato', data_contrato, 'id', id];
+        const sql = 'UPDATE product SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?';
+        const data = ['name', name, 'category', category, 'brand', brand, 'stock', stock, 'price', price, 'id', id];
 
         database.query(sql, data, (error) => {
             if(error) {
@@ -64,14 +64,14 @@ class Funcionario {
                 return
             }
 
-            res.json({message: "Funcionário(a) atualizado(a) com sucesso"});
+            res.json({message: "Produto atualizado com sucesso"});
         })
     }   
 
-    deleteFuncionario(req, res) {
+    deleteProduct(req, res) {
         const id = req.params.id;
 
-        const sql = 'DELETE FROM funcionarios WHERE ?? = ?';
+        const sql = 'DELETE FROM product WHERE ?? = ?';
         const data = ['id', id];
 
         database.query(sql, data, (error) => {
@@ -80,9 +80,9 @@ class Funcionario {
                 return;
             }
 
-            res.json({message: 'Funcionário(a) deletado(a) com sucesso'});
+            res.json({message: "Produto deletado com sucesso"});
         })
     }
 }
 
-module.exports = new Funcionario()
+module.exports = new Product()

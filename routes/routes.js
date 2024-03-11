@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Funcionario = require('../controllers/FuncController');
+const Product = require('../controllers/FuncController');
 
-router.post('/novoFuncionario', Funcionario.criarFuncionario);
-router.get('/funcionarios', Funcionario.listarFunciorarios);
-router.get('/funcionario/:id', Funcionario.buscarFuncionario);
-router.put('/funcionario/atualizar', Funcionario.atualizarFuncionario);
-router.delete('/funcionario/deletar/:id', Funcionario.deleteFuncionario);
+router.post('/product/create', Product.createProduct);
+router.get('/product/list', Product.listProducts);
+router.get('/product/search/:id', Product.searchProduct);
+router.put('/product/update', Product.updateProduct);
+router.delete('/product/delete/:id', Product.deleteProduct);
 
 
 module.exports = router
